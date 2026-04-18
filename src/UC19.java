@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class TrainApp {
 
@@ -17,19 +17,33 @@ public class TrainApp {
             bogieIds[i] = sc.nextLine();
         }
 
+        Arrays.sort(bogieIds);
+
+        System.out.println("Sorted Bogie IDs:");
+        System.out.println(Arrays.toString(bogieIds));
+
         System.out.print("Enter Bogie ID to search: ");
         String key = sc.nextLine();
 
+        int low = 0;
+        int high = n - 1;
         boolean found = false;
 
-        for (int i = 0; i < n; i++) {
-            if (bogieIds[i].equals(key)) {
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            int result = key.compareTo(bogieIds[mid]);
+
+            if (result == 0) {
                 found = true;
                 break;
+            } else if (result > 0) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
             }
         }
 
-        // Output
         if (found) {
             System.out.println("Bogie ID FOUND");
         } else {
