@@ -8,42 +8,34 @@ public class TrainApp {
 
         System.out.print("Enter number of bogie IDs: ");
         int n = sc.nextInt();
-        sc.nextLine();
+        sc.nextLine(); // consume newline
 
         String[] bogieIds = new String[n];
 
-        System.out.println("Enter bogie IDs:");
-        for (int i = 0; i < n; i++) {
-            bogieIds[i] = sc.nextLine();
+        if (n > 0) {
+            System.out.println("Enter bogie IDs:");
+            for (int i = 0; i < n; i++) {
+                bogieIds[i] = sc.nextLine();
+            }
         }
 
-        Arrays.sort(bogieIds);
-
-        System.out.println("Sorted Bogie IDs:");
-        System.out.println(Arrays.toString(bogieIds));
+        if (bogieIds.length == 0) {
+            throw new IllegalStateException("Search not allowed: Train has no bogies");
+        }
 
         System.out.print("Enter Bogie ID to search: ");
         String key = sc.nextLine();
 
-        int low = 0;
-        int high = n - 1;
         boolean found = false;
 
-        while (low <= high) {
-            int mid = (low + high) / 2;
-
-            int result = key.compareTo(bogieIds[mid]);
-
-            if (result == 0) {
+        for (int i = 0; i < bogieIds.length; i++) {
+            if (bogieIds[i].equals(key)) {
                 found = true;
                 break;
-            } else if (result > 0) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
             }
         }
 
+        // Output
         if (found) {
             System.out.println("Bogie ID FOUND");
         } else {
